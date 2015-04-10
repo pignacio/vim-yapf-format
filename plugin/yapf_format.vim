@@ -5,6 +5,14 @@
 if exists("g:yapf_format_loaded")
   finish
 endif
+
+if ! has('python')
+  echohl WarningMsg |
+        \ echomsg "vim-yapf-format requires vim compiled with python support" |
+        \ echohl None
+  finish
+endif
+
 let g:yapf_format_loaded = 1
 
 let s:script_folder_path = escape( expand( '<sfile>:p:h' ), '\' )
