@@ -21,6 +21,15 @@ function! YapfFormat() range
     endif
     let s:appended_yapf_path = 1
   endif
+
+  if exists('b:yapf_format_style')
+    let l:style = b:yapf_format_style
+  elseif exists('g:yapf_format_style')
+    let l:style = g:yapf_format_style
+  else
+    let l:style = 'pep8'
+  endif
+
   exe a:firstline . ',' . a:lastline . 'pyf ' . s:yapf_format_script
 endfunction
 

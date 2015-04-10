@@ -11,17 +11,6 @@ except ImportError:
     _YAPF_IMPORTED = False
 
 
-def _get_vim_variable(variable_name):
-    if int(vim.eval("exists('{}')".format(variable_name))):
-        return vim.eval(variable_name)
-    return None
-
-
-def _get_style():
-    return (_get_vim_variable('b:yapf_format_style') or
-            _get_vim_variable('g:yapf_format_style') or 'pep8')
-
-
 def main():
     if not _YAPF_IMPORTED:
         return
@@ -29,10 +18,9 @@ def main():
     buf = vim.current.buffer
     text = '\n'.join(buf)
     lines_range = (vim.current.range.start + 1, vim.current.range.end + 1)
-
     formatted = yapf_api.FormatCode(text,
                                     filename='<stdin>',
-                                    style_config=_get_style(),
+                                    style_config=vim.eval('l:style'),
                                     lines=[lines_range],
                                     verify=False)
 
