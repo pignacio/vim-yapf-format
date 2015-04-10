@@ -70,6 +70,14 @@ the current line in insert mode and the current range in visual mode:
 Of course, the ``<C-o>`` can be changed to any key you like ;)
 
 
+Credits
+=======
+
+This script is heavily inspired by clang-format.py_
+
+
 .. _YAPF: https://github.com/google/yapf
 .. _Vundle: https://github.com/gmarik/vundle
 .. _pathogen.vim: https://github.com/tpope/vim-pathogen
+.. _clang-format.py:
+  https://llvm.org/svn/llvm-project/cfe/trunk/tools/clang-format/clang-format.py
