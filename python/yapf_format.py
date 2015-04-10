@@ -18,9 +18,8 @@ def _get_vim_variable(variable_name):
 
 
 def _get_style():
-    return (_get_vim_variable('b:yapf_format_style')
-            or _get_vim_variable('g:yapf_format_style')
-            or 'pep8')
+    return (_get_vim_variable('b:yapf_format_style') or
+            _get_vim_variable('g:yapf_format_style') or 'pep8')
 
 
 def main():
@@ -31,12 +30,11 @@ def main():
     text = '\n'.join(buf)
     lines_range = (vim.current.range.start + 1, vim.current.range.end + 1)
 
-    formatted = yapf_api.FormatCode(
-        text,
-        filename='<stdin>',
-        style_config=_get_style(),
-        lines=[lines_range],
-        verify=False)
+    formatted = yapf_api.FormatCode(text,
+                                    filename='<stdin>',
+                                    style_config=_get_style(),
+                                    lines=[lines_range],
+                                    verify=False)
 
     lines = formatted.rstrip('\n').split('\n')
     sequence = difflib.SequenceMatcher(None, buf, lines)
