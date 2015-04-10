@@ -7,7 +7,7 @@ try:
     _YAPF_IMPORTED = True
 except ImportError:
     sys.stderr.write("Could not import yapf_api. Have you set "
-                     "g:yapf_format_yapf_location  correctly?")
+                     "g:yapf_format_yapf_location correctly?")
     _YAPF_IMPORTED = False
 
 
