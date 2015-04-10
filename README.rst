@@ -56,9 +56,9 @@ the current line in insert mode and the current range in visual mode:
 
 .. code:: vim
 
-  map <C-o> :%PythonFormat<CR>
-  imap <C-o> <ESC>:PythonFormat<CR>i
-  vmap <C-o> :PythonFormat<CR>
+  map <C-o> :%YapfFormat<CR>
+  imap <C-o> <ESC>:YapfFormat<CR>i
+  vmap <C-o> :YapfFormat<CR>
 
 Of course, the ``<C-o>`` can be changed to any key you like ;)
 
