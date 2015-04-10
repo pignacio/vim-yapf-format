@@ -50,6 +50,13 @@ examples:
   # In general, reformat <range>
   :<range>YapfFormat
 
+The default style is ``pep8``. To change it, set the ``g:yapf_format_style``
+(for global style) or ``b:yapf_format_style`` (for current buffer) to your
+preffered style.  Buffer variable takes precedende over the global one, to
+allow single buffer overrides.
+
+Key Bindings
+============
 
 I use the following key bindings to reformat the whole file in normal mode,
 the current line in insert mode and the current range in visual mode:
