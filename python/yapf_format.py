@@ -15,6 +15,7 @@ def main():
     if not _YAPF_IMPORTED:
         return
 
+    encoding = vim.eval('&encoding')
     buf = vim.current.buffer
     text = '\n'.join(buf)
     lines_range = (vim.current.range.start + 1, vim.current.range.end + 1)
@@ -28,7 +29,8 @@ def main():
     sequence = difflib.SequenceMatcher(None, buf, lines)
     for op in reversed(sequence.get_opcodes()):
         if op[0] is not 'equal':
-            vim.current.buffer[op[1]:op[2]] = lines[op[3]:op[4]]
+            vim.current.buffer[op[1]:op[2]] = [l.encode(encoding)
+                                               for l in lines[op[3]:op[4]]]
 
 
 if __name__ == '__main__':
