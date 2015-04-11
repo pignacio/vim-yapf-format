@@ -19,7 +19,8 @@ def main():
 
     encoding = vim.eval('&encoding')
     buf = vim.current.buffer
-    text = '\n'.join(map(lambda s: unicode(s, encoding), buf))
+    unicode_buf = [unicode(s, encoding) for s in buf]
+    text = '\n'.join(unicode_buf)
     lines_range = (vim.current.range.start + 1, vim.current.range.end + 1)
     formatted = yapf_api.FormatCode(text,
                                     filename='<stdin>',
@@ -28,7 +29,7 @@ def main():
                                     verify=False)
 
     lines = formatted.rstrip('\n').split('\n')
-    sequence = difflib.SequenceMatcher(None, buf, lines)
+    sequence = difflib.SequenceMatcher(None, unicode_buf, lines)
     for op in reversed(sequence.get_opcodes()):
         if op[0] is not 'equal':
             vim.current.buffer[op[1]:op[2]] = [l.encode(encoding)
