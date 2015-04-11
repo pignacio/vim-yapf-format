@@ -19,7 +19,7 @@ def main():
 
     encoding = vim.eval('&encoding')
     buf = vim.current.buffer
-    text = '\n'.join(buf)
+    text = '\n'.join(map(lambda s: unicode(s, encoding), buf))
     lines_range = (vim.current.range.start + 1, vim.current.range.end + 1)
     formatted = yapf_api.FormatCode(text,
                                     filename='<stdin>',
