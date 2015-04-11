@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals, division
+
 import difflib
 import sys
 import vim
