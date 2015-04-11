@@ -2,7 +2,7 @@
 vim-yapf-format
 ===============
 
-VIM integration for yapf_.
+VIM integration for YAPF_.
 
 
 Installation
@@ -24,11 +24,11 @@ or with pathogen.vim_:
 Requirements
 ============
 
-* yapf_
+* YAPF_
 
 **NOTE:**
 
-If ``yapf`` is not in your ``sys.path`` you have to add the following line in
+If ``YAPF`` is not in your ``sys.path`` you have to add the following line in
 your ``.vimrc``:
 
 .. code:: vim
@@ -81,7 +81,7 @@ Credits
 This script is heavily inspired by clang-format.py_
 
 
-.. _yapf: https://github.com/google/yapf
+.. _YAPF: https://github.com/google/yapf
 .. _Vundle: https://github.com/gmarik/vundle
 .. _pathogen.vim: https://github.com/tpope/vim-pathogen
 .. _clang-format.py:
