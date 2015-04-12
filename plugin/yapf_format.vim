@@ -37,6 +37,9 @@ function! YapfFormat() range
   else
     let l:style = 'pep8'
   endif
+  let l:allow_out_of_range = exists('g:yapf_format_allow_out_of_range_changes')?
+        \ !!g:yapf_format_allow_out_of_range_changes :
+        \ 0
 
   exe a:firstline . ',' . a:lastline . 'pyf ' . s:yapf_format_script
 endfunction
