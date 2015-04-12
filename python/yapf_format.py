@@ -21,7 +21,8 @@ def main():
     buf = vim.current.buffer
     unicode_buf = [unicode(s, encoding) for s in buf]
     text = '\n'.join(unicode_buf)
-    lines_range = (vim.current.range.start + 1, vim.current.range.end + 1)
+    buf_range = (vim.current.range.start, vim.current.range.end)
+    lines_range = [pos + 1 for pos in buf_range]
     formatted = yapf_api.FormatCode(text,
                                     filename='<stdin>',
                                     style_config=vim.eval('l:style'),
@@ -30,8 +31,17 @@ def main():
 
     lines = formatted.rstrip('\n').split('\n')
     sequence = difflib.SequenceMatcher(None, unicode_buf, lines)
+
+    allow_out_of_range = vim.eval("l:allow_out_of_range") != "0"
+    print allow_out_of_range
+
     for op in reversed(sequence.get_opcodes()):
-        if op[0] is not 'equal':
+        if op[0] == 'equal':
+            continue
+        # buf_range is [closed, closed], and op is [closed,open)
+        # so we must offset buf_range[1]
+        in_range = max(buf_range[0], op[1]) <= min(buf_range[1] + 1, op[2])
+        if in_range or allow_out_of_range:
             vim.current.buffer[op[1]:op[2]] = [l.encode(encoding)
                                                for l in lines[op[3]:op[4]]]
 
