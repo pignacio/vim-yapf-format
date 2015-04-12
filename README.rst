@@ -60,6 +60,26 @@ The default style is ``pep8``. To change it, set the ``g:yapf_format_style``
 preffered style.  Buffer variable takes precedende over the global one, to
 allow single buffer overrides.
 
+Configuration
+=============
+
+* **Out of range changes:**
+
+YAPF fixes code (indentation fixes, for example) outside of the ``--lines``
+range.
+
+This produces unexpected changes when using the VISUAL reformat, and makes
+editing and partially reformatting a non-YAPF compliant file vey cumbersome.
+
+We avoid this behaviour by default, applying changes only in the direct
+proximity of the selected range.
+
+If you like the original behaviour, you can restore it setting
+
+.. code:: vim
+
+  let g:yapf_format_allow_out_of_range_changes = 1
+
 Key Bindings
 ============
 
