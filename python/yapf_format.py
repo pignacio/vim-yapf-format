@@ -33,7 +33,6 @@ def main():
     sequence = difflib.SequenceMatcher(None, unicode_buf, lines)
 
     allow_out_of_range = vim.eval("l:allow_out_of_range") != "0"
-    print allow_out_of_range
 
     for op in reversed(sequence.get_opcodes()):
         if op[0] == 'equal':
