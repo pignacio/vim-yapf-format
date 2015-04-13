@@ -69,7 +69,7 @@ YAPF fixes code (indentation fixes, for example) outside of the ``--lines``
 range.
 
 This produces unexpected changes when using the VISUAL reformat, and makes
-editing and partially reformatting a non-YAPF compliant file vey cumbersome.
+editing and partially reformatting a non-YAPF-compliant file vey cumbersome.
 
 We avoid this behaviour by default, applying changes only in the direct
 proximity of the selected range.
