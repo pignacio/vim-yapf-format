@@ -41,7 +41,7 @@ Usage
 * The ``YapfFullFormat`` command formats the whole file and tries to restore
   the cursor position after formatting.
 
-**NOTE:**  Right now we can't do mucho about the cursor, so ``YapfFullFormat``
+**NOTE:**  Right now we can't do much about the cursor, so ``YapfFullFormat``
 just tries to restore it to the same line and column it was before formatting.
 Maybe if ``yapf`` implements something like ``clang-format.py`` ``--cursor``
 argument, we can improve this.
