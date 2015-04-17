@@ -38,8 +38,17 @@ your ``.vimrc``:
 Usage
 =====
 
-Use the ``YapfFormat`` command to format the current lines or range. Some
-examples:
+* The ``YapfFullFormat`` command formats the whole file and tries to restore
+  the cursor position after formatting.
+
+**NOTE:**  Right now we can't do mucho about the cursor, so ``YapfFullFormat``
+just tries to restore it to the same line and column it was before formatting.
+Maybe if ``yapf`` implements something like ``clang-format.py`` ``--cursor``
+argument, we can improve this.
+
+
+* Use the ``YapfFormat`` command to format the current line or range. The
+  cursor is reset to the beggining of the formatted range. Some examples:
 
 .. code:: vim
 
@@ -49,11 +58,11 @@ examples:
   # Reformat current visual range
   :'<,'>YapfFormat
 
-  # Reformat whole file
-  :%YapfFormat
-
   # In general, reformat <range>
   :<range>YapfFormat
+
+  # Don't do this, use YapFullFormat!
+  :%YapfFormat
 
 The default style is ``pep8``. To change it, set the ``g:yapf_format_style``
 (for global style) or ``b:yapf_format_style`` (for current buffer) to your
@@ -88,7 +97,7 @@ the current line in insert mode and the current range in visual mode:
 
 .. code:: vim
 
-  map <C-o> :%YapfFormat<CR>
+  map <C-o> :YapfFullFormat<CR>
   imap <C-o> <ESC>:YapfFormat<CR>i
   vmap <C-o> :YapfFormat<CR>
 
