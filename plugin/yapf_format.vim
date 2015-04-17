@@ -44,3 +44,9 @@ function! YapfFormat() range
   exe a:firstline . ',' . a:lastline . 'pyf ' . s:yapf_format_script
 endfunction
 
+command! YapfFullFormat call YapfFullFormat()
+function! YapfFullFormat()
+    let l:cursor_pos = getpos(".")
+    %YapfFormat
+    call setpos(".", l:cursor_pos)
+  endfunction
