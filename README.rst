@@ -52,16 +52,16 @@ argument, we can improve this.
 
 .. code:: vim
 
-  # Reformat current line
+  " Reformat current line
   :YapfFormat
 
-  # Reformat current visual range
+  " Reformat current visual range
   :'<,'>YapfFormat
 
-  # In general, reformat <range>
+  " In general, reformat <range>
   :<range>YapfFormat
 
-  # Don't do this, use YapFullFormat!
+  " Don't do this, use YapFullFormat!
   :%YapfFormat
 
 The default style is ``pep8``. To change it, set the ``g:yapf_format_style``
