@@ -23,11 +23,17 @@ def main():
     text = '\n'.join(unicode_buf)
     buf_range = (vim.current.range.start, vim.current.range.end)
     lines_range = [pos + 1 for pos in buf_range]
-    formatted = yapf_api.FormatCode(text,
-                                    filename='<stdin>',
-                                    style_config=vim.eval('l:style'),
-                                    lines=[lines_range],
-                                    verify=False)
+    try:
+        formatted = yapf_api.FormatCode(text,
+                                        filename='<stdin>',
+                                        style_config=vim.eval('l:style'),
+                                        lines=[lines_range],
+                                        verify=False)
+    except (SyntaxError, IndentationError) as err:
+        vim.command('let l:error_type = "{}"'.format(type(err).__name__))
+        vim.command('let l:error_position = [{}, {}]'.format(err.lineno,
+                                                             err.offset))
+        return
 
     lines = formatted.rstrip('\n').split('\n')
     sequence = difflib.SequenceMatcher(None, unicode_buf, lines)
