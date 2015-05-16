@@ -89,6 +89,16 @@ If you like the original behaviour, you can restore it setting
 
   let g:yapf_format_allow_out_of_range_changes = 1
 
+* **Moving cursor to errors:**
+
+YAPF fails when the buffer contains syntax errors. When that happens during a
+reformat, the cursor is moved to the error location. To disable this behaviour,
+you can set:
+
+.. code:: vim
+
+  let g:yapf_format_move_to_error = 0
+
 Key Bindings
 ============
 
