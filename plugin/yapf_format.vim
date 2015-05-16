@@ -42,11 +42,28 @@ function! YapfFormat() range
         \ 0
 
   exe a:firstline . ',' . a:lastline . 'pyf ' . s:yapf_format_script
+  if exists('l:error_type')
+    let l:error_line = l:error_position[0]
+    let l:error_column = l:error_position[1]
+    echohl ErrorMsg  |
+          \ echo l:error_type . " @ (" . l:error_line . ', ' . l:error_column . ')' |
+          \ echohl None
+    let l:position = getpos('.')
+    let l:position[1] = l:error_line
+    let l:position[2] = l:error_column
+    call setpos('.', l:position)
+    return 1
+  endif
+  return 0
 endfunction
 
 command! YapfFullFormat call YapfFullFormat()
 function! YapfFullFormat()
-    let l:cursor_pos = getpos(".")
-    %YapfFormat
+  let l:cursor_pos = getpos(".")
+  redir => l:message
+  %YapfFormat
+  redir END
+  if l:message == ''
     call setpos(".", l:cursor_pos)
-  endfunction
+  endif
+endfunction
