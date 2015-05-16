@@ -13,11 +13,21 @@ if ! has('python')
   finish
 endif
 
+function! GetVar(...)
+  let l:varName = a:1
+  let l:varValue = a:2
+  if exists('b:yapf_format_' . l:varName)
+    exe "let l:varValue = b:yapf_format_" . l:varName
+  elseif exists('g:yapf_format_' . l:varName)
+    exe "let l:varValue = g:yapf_format_" . l:varName
+  endif
+  return l:varValue
+endfunction
+
 let g:yapf_format_loaded = 1
 
 let s:script_folder_path = escape( expand( '<sfile>:p:h' ), '\' )
 let s:yapf_format_script = s:script_folder_path . '/../python/yapf_format.py'
-
 let s:appended_yapf_path = 0
 
 command! -range YapfFormat <line1>,<line2>call YapfFormat()
@@ -42,16 +52,19 @@ function! YapfFormat() range
         \ 0
 
   exe a:firstline . ',' . a:lastline . 'pyf ' . s:yapf_format_script
+
   if exists('l:error_type')
     let l:error_line = l:error_position[0]
     let l:error_column = l:error_position[1]
     echohl ErrorMsg  |
           \ echo l:error_type . " @ (" . l:error_line . ', ' . l:error_column . ')' |
           \ echohl None
-    let l:position = getpos('.')
-    let l:position[1] = l:error_line
-    let l:position[2] = l:error_column
-    call setpos('.', l:position)
+    if GetVar('move_to_error', 1) == 1
+      let l:position = getpos('.')
+      let l:position[1] = l:error_line
+      let l:position[2] = l:error_column
+      call setpos('.', l:position)
+    endif
     return 1
   endif
   return 0
@@ -63,7 +76,7 @@ function! YapfFullFormat()
   redir => l:message
   %YapfFormat
   redir END
-  if l:message == ''
+  if l:message == '' || GetVar('move_to_error', 1) != 1
     call setpos(".", l:cursor_pos)
   endif
 endfunction
