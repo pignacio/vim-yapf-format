@@ -41,24 +41,30 @@ function! YapfFormat() range
   endif
 
   if exists('b:yapf_format_style')
-    let l:style = b:yapf_format_style
-  elseif exists('g:yapf_format_style')
-    let l:style = g:yapf_format_style
+    let l:buffer_style = b:yapf_format_style
   else
-    let l:style = 'pep8'
+    let l:buffer_style = ''
   endif
+
+  if exists('g:yapf_format_style')
+    let l:global_style = g:yapf_format_style
+  else
+    let l:global_style = 'pep8'
+  endif
+
   let l:allow_out_of_range = exists('g:yapf_format_allow_out_of_range_changes')?
         \ !!g:yapf_format_allow_out_of_range_changes :
         \ 0
 
   exe a:firstline . ',' . a:lastline . 'pyf ' . s:yapf_format_script
 
+
   if exists('l:error_type')
     let l:error_line = l:error_position[0]
     let l:error_column = l:error_position[1]
     echohl ErrorMsg  |
-          \ echo l:error_type . " @ (" . l:error_line . ', ' . l:error_column . ')' |
-          \ echohl None
+          \ echon "<ERROR> " . l:error_type . " @ (" . l:error_line . ', ' .
+          \ l:error_column . ')' | echohl None
     if GetVar('move_to_error', 1) == 1
       let l:position = getpos('.')
       let l:position[1] = l:error_line
@@ -67,6 +73,7 @@ function! YapfFormat() range
     endif
     return 1
   endif
+  echon "Used style: " . l:used_style . " "
   return 0
 endfunction
 
@@ -76,7 +83,7 @@ function! YapfFullFormat()
   redir => l:message
   %YapfFormat
   redir END
-  if l:message == '' || GetVar('move_to_error', 1) != 1
+  if l:message !~ '<ERROR>' || GetVar('move_to_error', 1) != 1
     call setpos(".", l:cursor_pos)
   endif
 endfunction
