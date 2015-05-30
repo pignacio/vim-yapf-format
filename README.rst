@@ -64,10 +64,17 @@ argument, we can improve this.
   " Don't do this, use YapFullFormat!
   :%YapfFormat
 
-The default style is ``pep8``. To change it, set the ``g:yapf_format_style``
-(for global style) or ``b:yapf_format_style`` (for current buffer) to your
-preffered style.  Buffer variable takes precedende over the global one, to
-allow single buffer overrides.
+
+The style used to format the buffer is checking the following in order:
+
+* ``b:yapf_format_style`` variable.
+
+* Local ``.yapf.style`` for the file's project (or current directory for
+  unsaved files).
+
+* ``g:yapf_format_style`` variable.
+
+* ``pep8``
 
 Configuration
 =============
