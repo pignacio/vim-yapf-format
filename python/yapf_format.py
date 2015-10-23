@@ -51,6 +51,9 @@ def main():
                                                              err.offset))
         return
 
+    if isinstance(formatted, tuple):
+        formatted = formatted[0]
+
     lines = formatted.rstrip('\n').split('\n')
     sequence = difflib.SequenceMatcher(None, unicode_buf, lines)
 
