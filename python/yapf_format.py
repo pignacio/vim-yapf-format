@@ -33,7 +33,7 @@ def main():
 
     encoding = vim.eval('&encoding')
     buf = vim.current.buffer
-    unicode_buf = [unicode(s, encoding) for s in buf]
+    unicode_buf = [s for s in buf]
     text = '\n'.join(unicode_buf)
     buf_range = (vim.current.range.start, vim.current.range.end)
     lines_range = [pos + 1 for pos in buf_range]
