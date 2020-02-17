@@ -33,8 +33,7 @@ def main():
 
     encoding = vim.eval('&encoding')
     buf = vim.current.buffer
-    unicode_buf = [unicode(s, encoding) for s in buf]
-    text = '\n'.join(unicode_buf)
+    text = '\n'.join(buf)
     buf_range = (vim.current.range.start, vim.current.range.end)
     lines_range = [pos + 1 for pos in buf_range]
     style_config = _get_style()
@@ -55,7 +54,7 @@ def main():
         formatted = formatted[0]
 
     lines = formatted.rstrip('\n').split('\n')
-    sequence = difflib.SequenceMatcher(None, unicode_buf, lines)
+    sequence = difflib.SequenceMatcher(None, buf, lines)
 
     allow_out_of_range = vim.eval("l:allow_out_of_range") != "0"
 
