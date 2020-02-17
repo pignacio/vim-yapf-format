@@ -34,7 +34,7 @@ command! -range YapfFormat <line1>,<line2>call YapfFormat()
 function! YapfFormat() range
   if ! s:appended_yapf_path
     if exists("g:yapf_format_yapf_location")
-      py import sys
+      py3 import sys
       exe 'py3 sys.path.append("' . expand(g:yapf_format_yapf_location) . '")'
     endif
     let s:appended_yapf_path = 1
